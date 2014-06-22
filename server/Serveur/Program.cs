@@ -112,56 +112,58 @@ namespace Serveur
                                     }
                                 }
                             }
-                            /*
                             if (truc == (byte)PacketTypes.SCORE)
                             {
                                 senderConnection = inc.SenderConnection;
-                                int score = inc.ReadInt32();
-                                for (int i = 0; i < server.ConnectionsCount; i++)
+                                int whichPersoIndex = inc.ReadInt32();
+                                int newscore = inc.ReadInt32();
+                                for (int j = 0; j <= index; j++)
                                 {
-
-                                    outmsg = server.CreateMessage();
-                                    outmsg.Write((byte)PacketTypes.SCORE);
-                                    //envoi de l'index du client à modifier.
-                                    outmsg.Write(clients[senderConnection]);
-                                    outmsg.Write(score);
-                                    server.SendMessage(outmsg, server.Connections[i], NetDeliveryMethod.ReliableOrdered);
+                                    if (j != whichPersoIndex)
+                                    {
+                                        outmsg = server.CreateMessage();
+                                        outmsg.Write((byte)PacketTypes.SCORE);
+                                        outmsg.Write(whichPersoIndex);
+                                        outmsg.Write(newscore);
+                                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                                    }
                                 }
                             }
                             if (truc == (byte)PacketTypes.BONUS)
                             {
-                           
                                 senderConnection = inc.SenderConnection;
-                                int bonus = inc.ReadInt32();
-                                for (int i = 0; i < server.ConnectionsCount; i++)
+                                int whichPersoIndex = inc.ReadInt32();
+                                int newbonus = inc.ReadInt32();
+                                for (int j = 0; j <= index; j++)
                                 {
-
-                                    outmsg = server.CreateMessage();
-                                    outmsg.Write((byte)PacketTypes.BONUS);
-                                    //envoi de l'index du client à modifier.
-                                    outmsg.Write(clients[senderConnection]);
-                                    outmsg.Write(bonus);
-                                    server.SendMessage(outmsg, server.Connections[i], NetDeliveryMethod.ReliableOrdered);
-
+                                    if (j != whichPersoIndex)
+                                    {
+                                        outmsg = server.CreateMessage();
+                                        outmsg.Write((byte)PacketTypes.BONUS);
+                                        outmsg.Write(whichPersoIndex);
+                                        outmsg.Write(newbonus);
+                                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                                    }
                                 }
                             }
                             if (truc == (byte)PacketTypes.HEALTH)
                             {
                                 senderConnection = inc.SenderConnection;
-                                int health = inc.ReadInt32();
-                                for (int i = 0; i < server.ConnectionsCount; i++)
+                                int whichPersoIndex = inc.ReadInt32();
+                                int newhealth = inc.ReadInt32();
+                                for (int j = 0; j <= index; j++)
                                 {
-
-                                    outmsg = server.CreateMessage();
-                                    outmsg.Write((byte)PacketTypes.HEALTH);
-                                    //envoi de l'index du client à modifier.
-                                    outmsg.Write(clients[senderConnection]);
-                                    outmsg.Write(health);
-                                    server.SendMessage(outmsg, server.Connections[i], NetDeliveryMethod.ReliableOrdered);
+                                    if (j != whichPersoIndex)
+                                    {
+                                        outmsg = server.CreateMessage();
+                                        outmsg.Write((byte)PacketTypes.HEALTH);
+                                        outmsg.Write(whichPersoIndex);
+                                        outmsg.Write(newhealth);
+                                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                                    }
                                 }
-                  
                             }
-                            */
+
                             break;
                         case NetIncomingMessageType.StatusChanged:
                             Console.WriteLine("status a changé ");

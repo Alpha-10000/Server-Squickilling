@@ -18,3 +18,6 @@ C:\Users\Victor\Documents\Serveur\Serveur\server-Squickilling\server\Serveur\bin
 C:\Users\Victor\Documents\Serveur\Serveur\server-Squickilling\server\Serveur\obj\x86\Debug\Serveur.csprojResolveAssemblyReference.cache
 C:\Users\Alpha\Documents\GitHub\Server-Squickilling\server\Serveur\obj\x86\Debug\Serveur.exe
 C:\Users\Alpha\Documents\GitHub\Server-Squickilling\server\Serveur\obj\x86\Debug\Serveur.pdb
+C:\Users\Alpha\Documents\GitHub\Server-Squickilling\server\Serveur\bin\Debug\Serveur.exe
+C:\Users\Alpha\Documents\GitHub\Server-Squickilling\server\Serveur\bin\Debug\Serveur.pdb
+C:\Users\Alpha\Documents\GitHub\Server-Squickilling\server\Serveur\obj\x86\Debug\Serveur.csprojResolveAssemblyReference.cache
