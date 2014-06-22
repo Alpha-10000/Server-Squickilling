@@ -1,0 +1,13 @@
+C:\Users\Alpha\Desktop\Serveur\Serveur\bin\Debug\Serveur.exe
+C:\Users\Alpha\Desktop\Serveur\Serveur\bin\Debug\Serveur.pdb
+C:\Users\Alpha\Desktop\Serveur\Serveur\bin\Debug\Lidgren.Network.dll
+C:\Users\Alpha\Desktop\Serveur\Serveur\obj\x86\Debug\Serveur.csprojResolveAssemblyReference.cache
+C:\Users\Alpha\Desktop\Serveur\Serveur\obj\x86\Debug\Serveur.exe
+C:\Users\Alpha\Desktop\Serveur\Serveur\obj\x86\Debug\Serveur.pdb
+C:\Users\Victor\Documents\Serveur\Serveur\obj\x86\Debug\Serveur.exe
+C:\Users\Victor\Documents\Serveur\Serveur\obj\x86\Debug\Serveur.pdb
+C:\Users\Victor\Documents\Serveur\Serveur\bin\Debug\Serveur.exe
+C:\Users\Victor\Documents\Serveur\Serveur\bin\Debug\Serveur.pdb
+C:\Users\Victor\Documents\Serveur\Serveur\obj\x86\Debug\Serveur.csprojResolveAssemblyReference.cache
+C:\Users\Victor\Documents\Serveur\Serveur\server-Squickilling\Serveur\obj\x86\Debug\Serveur.exe
+C:\Users\Victor\Documents\Serveur\Serveur\server-Squickilling\Serveur\obj\x86\Debug\Serveur.pdb
