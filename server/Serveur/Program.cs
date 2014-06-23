@@ -15,6 +15,7 @@ namespace Serveur
         SCORE,
         BONUS,
         HEALTH,
+        PROJ,
         IA
     }
 

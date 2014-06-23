@@ -89,6 +89,73 @@ namespace Serveur
                     }
                 }
             }
+
+            if (truc == (byte)PacketTypes.SCORE)
+            {
+                senderConnection = inc.SenderConnection;
+                int whichPersoIndex = inc.ReadInt32();
+                int newScore = inc.ReadInt32();
+                for (int j = 0; j <= index; j++)
+                {
+                    if (j != whichPersoIndex)
+                    {
+                        outmsg = server.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.SCORE);
+                        outmsg.Write(whichPersoIndex);
+                        outmsg.Write(newScore);
+                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                    }
+                }
+            }
+            if (truc == (byte)PacketTypes.BONUS)
+            {
+                senderConnection = inc.SenderConnection;
+                int whichPersoIndex = inc.ReadInt32();
+                int newBonus = inc.ReadInt32();
+                for (int j = 0; j <= index; j++)
+                {
+                    if (j != whichPersoIndex)
+                    {
+                        outmsg = server.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.BONUS);
+                        outmsg.Write(whichPersoIndex);
+                        outmsg.Write(newBonus);
+                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                    }
+                }
+            }
+            if (truc == (byte)PacketTypes.HEALTH)
+            {
+                senderConnection = inc.SenderConnection;
+                int whichPersoIndex = inc.ReadInt32();
+                int newHealth = inc.ReadInt32();
+                for (int j = 0; j <= index; j++)
+                {
+                    if (j != whichPersoIndex)
+                    {
+                        outmsg = server.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.HEALTH);
+                        outmsg.Write(whichPersoIndex);
+                        outmsg.Write(newHealth);
+                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                    }
+                }
+            }
+            if (truc == (byte)PacketTypes.PROJ)
+            {
+                senderConnection = inc.SenderConnection;
+                int whichPersoIndex = inc.ReadInt32();
+                for (int j = 0; j <= index; j++)
+                {
+                    if (j != whichPersoIndex)
+                    {
+                        outmsg = server.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.PROJ);
+                        outmsg.Write(whichPersoIndex);
+                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                    }
+                }
+            }
             /*
             if (truc == (byte)PacketTypes.SCORE)
             {
