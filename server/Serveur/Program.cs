@@ -15,7 +15,8 @@ namespace Serveur
         SCORE,
         BONUS,
         HEALTH,
-        IA
+        IA,
+        PERSOLEAVE
     }
 
     class Program
@@ -39,7 +40,7 @@ namespace Serveur
 
             while (true)
             {
-
+                Console.WriteLine("nb games : " + myGames.Count);
                 NetIncomingMessage inc;
                 if ((inc = server.ReadMessage()) != null)
                 {
@@ -77,7 +78,11 @@ namespace Serveur
                             break;
                             case NetIncomingMessageType.StatusChanged:
                             for (int i = 0; i < myGames.Count; i++)
-                                myGames[i].StatusChanged(inc);
+                            {
+                                myGames[i].StatusChanged(inc, outmsg);
+                                if(myGames[i].index == -1)
+                                    myGames.Remove(myGames[i]);
+                            }
         
                             break;
                         default:

@@ -10,7 +10,7 @@ namespace Serveur
     class Game
     {
         private NetServer server;
-        private int index;
+        public int index { get; private set; }
         private Dictionary<NetConnection, int> clients = new Dictionary<NetConnection, int>();
         private List<NetConnection> AllClients = new List<NetConnection>();
 
@@ -28,12 +28,11 @@ namespace Serveur
         {
             NetConnection senderConnection = inc.SenderConnection;
             inc.SenderConnection.Approve();
-            Thread.Sleep(1000);
+            Thread.Sleep(500);
             clients.Add(senderConnection, index);
             AllClients.Add(senderConnection);
             index++;
             for (int i = 0; i <= index; i++)
-            {
                 for (int j = 0; j <= index; j++)
                 {
                     outmsg = server.CreateMessage();
@@ -42,50 +41,53 @@ namespace Serveur
                     outmsg.Write(index + 1);
                     server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
                 }
-                int debug = index + 1;
-                Console.WriteLine("nb player :  " + debug);
-                if (i != index)
-                    Console.WriteLine("ancien joueur id : " + i);
-                else
-                    Console.WriteLine("Nouveau joueur accepté id : " + i);
-            }
         }
 
         public void TypeData(NetIncomingMessage inc, byte truc, NetOutgoingMessage outmsg)
         {
-            NetConnection senderConnection;
-            Console.WriteLine("là je reçois de la data (pos, health ,etc)");
             if (truc == (byte)PacketTypes.POSITIONX)
             {
-                senderConnection = inc.SenderConnection;
                 int whichPersoIndex = inc.ReadInt32();
                 float newPosX = inc.ReadFloat();
                 for (int j = 0; j <= index; j++)
                 {
                     if (j != whichPersoIndex)
                     {
-                        outmsg = server.CreateMessage();
-                        outmsg.Write((byte)PacketTypes.POSITIONX);
-                        outmsg.Write(whichPersoIndex);
-                        outmsg.Write(newPosX);
-                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                        try // It has to be!!! Because maybe he doesn't know if the perso has disconnected or not
+                        {
+                            outmsg = server.CreateMessage();
+                            outmsg.Write((byte)PacketTypes.POSITIONX);
+                            outmsg.Write(whichPersoIndex);
+                            outmsg.Write(newPosX);
+                            server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                 }
             }
             if (truc == (byte)PacketTypes.POSITIONY)
             {
-                senderConnection = inc.SenderConnection;
                 int whichPersoIndex = inc.ReadInt32();
                 float newPosY = inc.ReadFloat();
                 for (int j = 0; j <= index; j++)
                 {
                     if (j != whichPersoIndex)
                     {
-                        outmsg = server.CreateMessage();
-                        outmsg.Write((byte)PacketTypes.POSITIONY);
-                        outmsg.Write(whichPersoIndex);
-                        outmsg.Write(newPosY);
-                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                        try // It has to be!!! Because maybe he doesn't know if the perso has disconnected or not
+                        {
+                            outmsg = server.CreateMessage();
+                            outmsg.Write((byte)PacketTypes.POSITIONY);
+                            outmsg.Write(whichPersoIndex);
+                            outmsg.Write(newPosY);
+                            server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                        }
+                        catch
+                        {
+
+                        }
                     }
                 }
             }
@@ -141,21 +143,23 @@ namespace Serveur
             */
         }
 
-        public void StatusChanged(NetIncomingMessage inc)
+        public void StatusChanged(NetIncomingMessage inc, NetOutgoingMessage outmsg)
         {
             Console.WriteLine("status a changé ");
-            if (inc.SenderConnection.Status == NetConnectionStatus.Disconnected || inc.SenderConnection.Status == NetConnectionStatus.Disconnecting)
-            {
-                // Servira à retirer le perso de la partie s'il est déconnecté
-                //foreach (Perso p in in persos)
-                //{
-                //    if (p.Connection == inc.SenderConnection)
-                //    {
-                //        persos.remove(p);
-                //        break;
-                //    }
-                //}
-            }
+            for (int i = 0; i < AllClients.Count; i++)
+                if (AllClients[i].Status == NetConnectionStatus.Disconnected || AllClients[i].Status == NetConnectionStatus.Disconnecting)
+                {
+                    index--;
+                    AllClients.Remove(AllClients[i]);
+                    for (int j = 0; j < AllClients.Count; j++)
+                    {
+                        outmsg = server.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.PERSOLEAVE);
+                        outmsg.Write(i);
+                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                    }
+                    Console.WriteLine("the player id " + i + " has disconnected");
+                }
         }
                         
     }
