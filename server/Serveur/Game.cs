@@ -211,6 +211,7 @@ namespace Serveur
             for (int i = 0; i < AllClients.Count; i++)
                 if (AllClients[i].Status == NetConnectionStatus.Disconnected || AllClients[i].Status == NetConnectionStatus.Disconnecting)
                 {
+                    Console.WriteLine("someone has left");
                     index--;
                     AllClients.Remove(AllClients[i]);
                     for (int j = 0; j < AllClients.Count; j++)
@@ -219,7 +220,9 @@ namespace Serveur
                         outmsg.Write((byte)PacketTypes.PERSOLEAVE);
                         outmsg.Write(i);
                         server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                        Console.WriteLine("I notified the others");
                     }
+                    
                 }
         }
                         
