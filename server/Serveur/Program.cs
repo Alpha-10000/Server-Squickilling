@@ -15,8 +15,8 @@ namespace Serveur
         SCORE,
         BONUS,
         HEALTH,
-        PROJ,
-        IA
+        PERSOLEAVE,
+        PROJ
     }
 
     class Program
@@ -31,7 +31,7 @@ namespace Serveur
             NetServer server = new NetServer(config);
             NetOutgoingMessage outmsg = server.CreateMessage();
             server.Start();
-            Console.WriteLine("Serveur créé, j'attends mon café");
+            Console.WriteLine("Wesh ma gueule! J'attends des Squicky! Aidez moi à tuer des humains!");
 
             List<Game> myGames = new List<Game>();
 
@@ -40,7 +40,7 @@ namespace Serveur
 
             while (true)
             {
-
+              
                 NetIncomingMessage inc;
                 if ((inc = server.ReadMessage()) != null)
                 {
@@ -48,7 +48,7 @@ namespace Serveur
                     switch (inc.MessageType)
                     {
                         case NetIncomingMessageType.ConnectionApproval:
-                            Console.WriteLine("Connexion approuvé");
+                           
 
                             string id_player = inc.ReadString();
                             bool check = true;
@@ -78,11 +78,15 @@ namespace Serveur
                             break;
                             case NetIncomingMessageType.StatusChanged:
                             for (int i = 0; i < myGames.Count; i++)
-                                myGames[i].StatusChanged(inc);
+                            {
+                                myGames[i].StatusChanged(inc, outmsg);
+                                if(myGames[i].index == -1)
+                                    myGames.Remove(myGames[i]);
+                            }
         
                             break;
                         default:
-                            Console.WriteLine("Je reçois autre chose");
+                          
                             break;
 
                     }
