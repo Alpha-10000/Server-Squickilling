@@ -154,6 +154,22 @@ namespace Serveur
                     }
                 }
             }
+            if (truc == (byte)PacketTypes.DIRECTION)
+            {
+                int whichPersoIndex = inc.ReadInt32();
+                int newFrame = inc.ReadInt32();
+                for (int j = 0; j <= index; j++)
+                {
+                    if (j != whichPersoIndex)
+                    {
+                        outmsg = server.CreateMessage();
+                        outmsg.Write((byte)PacketTypes.DIRECTION);
+                        outmsg.Write(whichPersoIndex);
+                        outmsg.Write(newFrame);
+                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
+                    }
+                }
+            }
             /*
             if (truc == (byte)PacketTypes.SCORE)
             {

@@ -16,7 +16,8 @@ namespace Serveur
         BONUS,
         HEALTH,
         PERSOLEAVE,
-        PROJ
+        PROJ,
+        DIRECTION
     }
 
     class Program
