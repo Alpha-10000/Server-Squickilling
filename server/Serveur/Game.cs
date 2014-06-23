@@ -94,7 +94,6 @@ namespace Serveur
 
             if (truc == (byte)PacketTypes.SCORE)
             {
-                senderConnection = inc.SenderConnection;
                 int whichPersoIndex = inc.ReadInt32();
                 int newScore = inc.ReadInt32();
                 for (int j = 0; j <= index; j++)
@@ -111,7 +110,6 @@ namespace Serveur
             }
             if (truc == (byte)PacketTypes.BONUS)
             {
-                senderConnection = inc.SenderConnection;
                 int whichPersoIndex = inc.ReadInt32();
                 int newBonus = inc.ReadInt32();
                 for (int j = 0; j <= index; j++)
@@ -128,7 +126,6 @@ namespace Serveur
             }
             if (truc == (byte)PacketTypes.HEALTH)
             {
-                senderConnection = inc.SenderConnection;
                 int whichPersoIndex = inc.ReadInt32();
                 int newHealth = inc.ReadInt32();
                 for (int j = 0; j <= index; j++)
@@ -145,7 +142,6 @@ namespace Serveur
             }
             if (truc == (byte)PacketTypes.PROJ)
             {
-                senderConnection = inc.SenderConnection;
                 int whichPersoIndex = inc.ReadInt32();
                 for (int j = 0; j <= index; j++)
                 {
