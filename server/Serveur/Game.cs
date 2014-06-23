@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Lidgren.Network;
+using System.Threading;
 
 namespace Serveur
 {
@@ -27,6 +28,7 @@ namespace Serveur
         {
             NetConnection senderConnection = inc.SenderConnection;
             inc.SenderConnection.Approve();
+            Thread.Sleep(1000);
             clients.Add(senderConnection, index);
             AllClients.Add(senderConnection);
             index++;
