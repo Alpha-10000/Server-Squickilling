@@ -145,7 +145,6 @@ namespace Serveur
 
         public void StatusChanged(NetIncomingMessage inc, NetOutgoingMessage outmsg)
         {
-            Console.WriteLine("status a changé ");
             for (int i = 0; i < AllClients.Count; i++)
                 if (AllClients[i].Status == NetConnectionStatus.Disconnected || AllClients[i].Status == NetConnectionStatus.Disconnecting)
                 {
@@ -158,7 +157,6 @@ namespace Serveur
                         outmsg.Write(i);
                         server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
                     }
-                    Console.WriteLine("the player id " + i + " has disconnected");
                 }
         }
                         

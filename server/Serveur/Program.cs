@@ -31,7 +31,7 @@ namespace Serveur
             NetServer server = new NetServer(config);
             NetOutgoingMessage outmsg = server.CreateMessage();
             server.Start();
-            Console.WriteLine("Serveur créé, j'attends mon café");
+            Console.WriteLine("Wesh ma gueule! J'attends des Squicky! Aidez moi à tuer des humains!");
 
             List<Game> myGames = new List<Game>();
 
@@ -40,7 +40,7 @@ namespace Serveur
 
             while (true)
             {
-                Console.WriteLine("nb games : " + myGames.Count);
+              
                 NetIncomingMessage inc;
                 if ((inc = server.ReadMessage()) != null)
                 {
@@ -48,7 +48,7 @@ namespace Serveur
                     switch (inc.MessageType)
                     {
                         case NetIncomingMessageType.ConnectionApproval:
-                            Console.WriteLine("Connexion approuvé");
+                           
 
                             string id_player = inc.ReadString();
                             bool check = true;
@@ -86,7 +86,7 @@ namespace Serveur
         
                             break;
                         default:
-                            Console.WriteLine("Je reçois autre chose");
+                          
                             break;
 
                     }
