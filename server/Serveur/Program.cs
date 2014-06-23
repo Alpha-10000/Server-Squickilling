@@ -80,8 +80,11 @@ namespace Serveur
                             for (int i = 0; i < myGames.Count; i++)
                             {
                                 myGames[i].StatusChanged(inc, outmsg);
-                                if(myGames[i].index == -1)
+                                if (myGames[i].index == -1)
+                                {
                                     myGames.Remove(myGames[i]);
+                                    Console.WriteLine("I have now only " + myGames.Count + " games running");
+                                }
                             }
         
                             break;
