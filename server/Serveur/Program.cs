@@ -33,8 +33,7 @@ namespace Serveur
             Console.WriteLine("Serveur créé, j'attends mon café");
 
             List<Game> myGames = new List<Game>();
-           
-            int index = -1;
+
             Dictionary<NetConnection, int> clients = new Dictionary<NetConnection, int>();
             List<NetConnection> AllClients = new List<NetConnection>();
 
@@ -73,7 +72,7 @@ namespace Serveur
 
                         case NetIncomingMessageType.Data:
                             for (int i = 0; i < myGames.Count; i++)
-                                myGames[i].TypeData(inc, truc, outmsg);
+                                myGames[i].TypeData(inc, truc, outmsg);      
 
                             break;
                             case NetIncomingMessageType.StatusChanged:
