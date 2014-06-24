@@ -12,7 +12,7 @@ namespace Serveur
         private NetServer server;
         public int index { get; private set; }
         private Dictionary<NetConnection, int> clients = new Dictionary<NetConnection, int>();
-        private List<NetConnection> AllClients = new List<NetConnection>();
+        public List<NetConnection> AllClients = new List<NetConnection>();
 
         public string id_player;
 
@@ -68,9 +68,10 @@ namespace Serveur
                     }
                 }
             }
+
             if (truc == (byte)PacketTypes.POSITIONY)
             {
-                int whichPersoIndex = inc.ReadInt32();
+                int whichPersoIndex = inc.ReadInt32();//error when two parties together
                 float newPosY = inc.ReadFloat();
                 for (int j = 0; j <= index; j++)
                 {
@@ -154,22 +155,7 @@ namespace Serveur
                     }
                 }
             }
-            if (truc == (byte)PacketTypes.DIRECTION)
-            {
-                int whichPersoIndex = inc.ReadInt32();
-                int newFrame = inc.ReadInt32();
-                for (int j = 0; j <= index; j++)
-                {
-                    if (j != whichPersoIndex)
-                    {
-                        outmsg = server.CreateMessage();
-                        outmsg.Write((byte)PacketTypes.DIRECTION);
-                        outmsg.Write(whichPersoIndex);
-                        outmsg.Write(newFrame);
-                        server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
-                    }
-                }
-            }
+
             /*
             if (truc == (byte)PacketTypes.SCORE)
             {
@@ -227,7 +213,6 @@ namespace Serveur
             for (int i = 0; i < AllClients.Count; i++)
                 if (AllClients[i].Status == NetConnectionStatus.Disconnected || AllClients[i].Status == NetConnectionStatus.Disconnecting)
                 {
-                    Console.WriteLine("someone has left");
                     index--;
                     AllClients.Remove(AllClients[i]);
                     for (int j = 0; j < AllClients.Count; j++)
@@ -236,11 +221,9 @@ namespace Serveur
                         outmsg.Write((byte)PacketTypes.PERSOLEAVE);
                         outmsg.Write(i);
                         server.SendMessage(outmsg, AllClients[j], NetDeliveryMethod.ReliableOrdered);
-                        Console.WriteLine("I notified the others");
                     }
-                    
                 }
         }
-                        
+
     }
 }

@@ -41,60 +41,68 @@ namespace Serveur
 
             while (true)
             {
-              
-                NetIncomingMessage inc;
-                if ((inc = server.ReadMessage()) != null)
+
+                try
                 {
-                    byte truc = inc.ReadByte();
-                    switch (inc.MessageType)
+                    NetIncomingMessage inc;
+                    if ((inc = server.ReadMessage()) != null)
                     {
-                        case NetIncomingMessageType.ConnectionApproval:
-                           
+                        byte truc = inc.ReadByte();
+                        switch (inc.MessageType)
+                        {
+                            case NetIncomingMessageType.ConnectionApproval:
 
-                            string id_player = inc.ReadString();
-                            bool check = true;
-                            for (int i = 0; i < myGames.Count; i++)
-                            {
-                                if (myGames[i].id_player == id_player)
+
+                                string id_player = inc.ReadString();
+                                bool check = true;
+                                for (int i = 0; i < myGames.Count; i++)
                                 {
-                                    myGames[i].Create(inc, outmsg);
-                                    check = false;
-                                }
-                            }
-
-                                    if(check)
+                                    if (myGames[i].id_player == id_player)
                                     {
-                                        Game game = new Game(server, id_player);
-                                        game.Create(inc, outmsg);
-                                        myGames.Add(game);
+                                        myGames[i].Create(inc, outmsg);
+                                        check = false;
                                     }
-
-
-                            break;
-
-                        case NetIncomingMessageType.Data:
-                            for (int i = 0; i < myGames.Count; i++)
-                                myGames[i].TypeData(inc, truc, outmsg);      
-
-                            break;
-                            case NetIncomingMessageType.StatusChanged:
-                            for (int i = 0; i < myGames.Count; i++)
-                            {
-                                myGames[i].StatusChanged(inc, outmsg);
-                                if (myGames[i].index == -1)
-                                {
-                                    myGames.Remove(myGames[i]);
-                                    Console.WriteLine("I have now only " + myGames.Count + " games running");
                                 }
-                            }
-        
-                            break;
-                        default:
-                          
-                            break;
 
+                                if (check)
+                                {
+                                    Game game = new Game(server, id_player);
+                                    game.Create(inc, outmsg);
+                                    myGames.Add(game);
+                                }
+
+
+                                break;
+
+                            case NetIncomingMessageType.Data:
+                                for (int i = 0; i < myGames.Count; i++)
+                                    if (myGames[i].AllClients.Contains(inc.SenderConnection))
+                                        myGames[i].TypeData(inc, truc, outmsg);
+
+                                break;
+                            case NetIncomingMessageType.StatusChanged:
+                                for (int i = 0; i < myGames.Count; i++)
+                                {
+                                    if (myGames[i].AllClients.Contains(inc.SenderConnection))
+                                    {
+                                        myGames[i].StatusChanged(inc, outmsg);
+                                        if (myGames[i].index == -1)
+                                            myGames.Remove(myGames[i]);
+                                    }
+                                }
+
+                                break;
+                            default:
+
+                                break;
+
+                        }
                     }
                 }
+                catch
+                {
+
+                } 
             }
             }
     }
